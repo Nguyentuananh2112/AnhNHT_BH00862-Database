@@ -289,7 +289,34 @@ namespace QLSVdatabase
             }
         }
 
+        public int ExeCuteDelete(string sql, List<CustomParameter> listPara)
+        {
+            int rowsAffected = 0;
+            try
+            {
 
+                conn.Open();
+
+                SqlCommand storeProcedure = new SqlCommand(sql, conn);
+                storeProcedure.CommandType = CommandType.StoredProcedure;
+
+                foreach (CustomParameter param in listPara)
+                {
+                    storeProcedure.Parameters.AddWithValue(param.key, param.value);
+                }
+                rowsAffected = storeProcedure.ExecuteNonQuery();
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Command execiton error: " + ex.Message);
+                return rowsAffected;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
 
     }
