@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.Diagnostics.Eventing.Reader;
-using System.Data.Common;
 
 namespace QLSVdatabase
 {
@@ -36,7 +31,7 @@ namespace QLSVdatabase
                 conn.Open();
                 cmd = new SqlCommand(sql, conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                foreach(var para in lstPara)
+                foreach (var para in lstPara)
                 {
                     cmd.Parameters.AddWithValue(para.key, para.value);
                 }
@@ -66,12 +61,12 @@ namespace QLSVdatabase
                 return dt.Rows[0];
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Error Loading detailed information: " + ex.Message);
                 return null;
             }
-            finally 
+            finally
             {
                 conn.Close();
             }
@@ -93,8 +88,8 @@ namespace QLSVdatabase
                     storeProcedure.Parameters.AddWithValue(para.key, para.value);
                 }
 
-                
-                
+
+
 
                 // Thực thi stored procedure
                 int rowsAffected = storeProcedure.ExecuteNonQuery();
@@ -105,8 +100,8 @@ namespace QLSVdatabase
                 MessageBox.Show("Command execiton error: " + ex.Message);
                 return -100;
             }
-            finally 
-            { 
+            finally
+            {
                 conn.Close();
             }
         }
@@ -117,12 +112,12 @@ namespace QLSVdatabase
             List<TeacherDto> teacherList = new List<TeacherDto>();
             try
             {
-               
+
                 conn.Open();
 
                 SqlCommand storeProcedure = new SqlCommand(sql, conn);
                 ////storeProcedure.CommandType = CommandType.StoredProcedure;
-                
+
                 SqlDataReader reader = storeProcedure.ExecuteReader();
                 while (reader.Read())
                 {
@@ -185,7 +180,7 @@ namespace QLSVdatabase
             }
         }
 
-        public List<CourseDto> ExeCuteCourse(string sql, CustomParameter parameter) 
+        public List<CourseDto> ExeCuteCourse(string sql, CustomParameter parameter)
         {
             List<CourseDto> listData = new List<CourseDto>();
             try
@@ -246,7 +241,7 @@ namespace QLSVdatabase
                 {
                     storeProcedure.Parameters.AddWithValue(param.key, param.value);
                 }
-                
+
 
 
                 SqlDataReader reader = storeProcedure.ExecuteReader();
@@ -260,12 +255,12 @@ namespace QLSVdatabase
                     //       ngươc lại
                     //    double firstTestScore = = 0;
 
-                    double firstTestScore = !reader.IsDBNull(2) ? (double) reader.GetDouble(2) : 0 ;
+                    double firstTestScore = !reader.IsDBNull(2) ? (double)reader.GetDouble(2) : 0;
 
-                    double secondTestScore = !reader.IsDBNull(3) ? (double) reader.GetDouble(3) : 0;
+                    double secondTestScore = !reader.IsDBNull(3) ? (double)reader.GetDouble(3) : 0;
                     string fullName = reader.GetString(4);
                     string nameCourse = reader.GetString(5);
- 
+
                     listData.Add(new ScoreDto()
                     {
                         studentID = studentID,
@@ -289,8 +284,34 @@ namespace QLSVdatabase
             }
         }
 
+        public int ExeCuteDelete(string sql, List<CustomParameter> listPara)
+        {
+            int rowsAffected = 0;
+            try
+            {
 
+                conn.Open();
 
+                SqlCommand storeProcedure = new SqlCommand(sql, conn);
+                storeProcedure.CommandType = CommandType.StoredProcedure;
+
+                foreach (CustomParameter param in listPara)
+                {
+                    storeProcedure.Parameters.AddWithValue(param.key, param.value);
+                }
+                rowsAffected = storeProcedure.ExecuteNonQuery();
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Command execiton error: " + ex.Message);
+                return rowsAffected;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
     }
 

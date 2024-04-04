@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QLSVdatabase
@@ -23,9 +17,9 @@ namespace QLSVdatabase
         }
 
         private string Search = "";
-        
-            
-        
+
+
+
 
 
         private void LoadListStudent()
@@ -51,7 +45,7 @@ namespace QLSVdatabase
 
         private void dgvstudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void btnAddnew_Click(object sender, EventArgs e)
@@ -62,7 +56,7 @@ namespace QLSVdatabase
 
         private void dgvstudent_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
                 var msv = dgvstudent.Rows[e.RowIndex].Cells["Student_ID"].Value.ToString();
                 new frmStudent(msv).ShowDialog();
@@ -78,6 +72,41 @@ namespace QLSVdatabase
 
         private void txtKeyword_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void delStudent_Click(object sender, EventArgs e)
+        {
+            Tuple<string, string> tagData = delStudent.Tag as Tuple<string, string>;
+            if (tagData != null)
+            {
+                string studentId = tagData.Item1 as string;
+                string fullName = tagData.Item2 as string;
+                DialogResult result = MessageBox.Show("Do you want delete student '" + fullName + "'?", "Delete", MessageBoxButtons.OKCancel);
+                string sql = "deleteStudent";
+                if (result == DialogResult.OK)
+                {
+                    List<CustomParameter> listPara = new List<CustomParameter>();
+
+                    listPara.Add(new CustomParameter
+                    {
+                        key = "@studentId",
+                        value = studentId
+                    });
+
+                    int resultDel = new Database().ExeCuteDelete(sql, listPara);
+                    if (resultDel > 0)
+                    {
+                        MessageBox.Show("Delete successfully!");
+                        LoadListStudent();
+                    }
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    LoadListStudent();
+                }
+
+            }
 
         }
     }
