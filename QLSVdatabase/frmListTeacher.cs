@@ -61,5 +61,50 @@ namespace QLSVdatabase
         {
 
         }
+
+        private void dgvListTeacher_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                string teacherId = dgvListTeacher.Rows[e.RowIndex].Cells["Teacher_ID"].Value.ToString();
+                string fullName = dgvListTeacher.Rows[e.RowIndex].Cells["fullName"].Value.ToString();
+
+                delTeacher.Tag = new Tuple<string, string>(teacherId, fullName);
+            }
+        }
+
+        private void delTeacher_Click(object sender, EventArgs e)
+        {
+            Tuple<string, string> tagData = delTeacher.Tag as Tuple<string, string>;
+            if (tagData != null)
+            {
+                string teacherID = tagData.Item1 as string;
+                string fullName = tagData.Item2 as string;
+                DialogResult result = MessageBox.Show("Do you want delete teacher '" + fullName + "'?", "Delete", MessageBoxButtons.OKCancel);
+                string sql = "deleteTeacher";
+                if (result == DialogResult.OK)
+                {
+                    List<CustomParameter> listPara = new List<CustomParameter>();
+
+                    listPara.Add(new CustomParameter
+                    {
+                        key = "@teacherId",
+                        value = teacherID
+                    });
+
+                    int resultDel = new Database().ExeCuteDelete(sql, listPara);
+                    if (resultDel > 0)
+                    {
+                        MessageBox.Show("Delete successfully!");
+                        loadListTeacher();
+                    }
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    loadListTeacher();
+                }
+
+            }
+        }
     }
 }

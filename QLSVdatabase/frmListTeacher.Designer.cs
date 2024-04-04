@@ -33,6 +33,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnAddnew = new System.Windows.Forms.Button();
             this.dgvListTeacher = new System.Windows.Forms.DataGridView();
+            this.delTeacher = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListTeacher)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,12 +97,26 @@
             this.dgvListTeacher.TabIndex = 4;
             this.dgvListTeacher.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListTeacher_CellContentClick);
             this.dgvListTeacher.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListTeacher_CellDoubleClick);
+            this.dgvListTeacher.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListTeacher_CellClick);
+
+            // 
+            // delTeacher
+            // 
+            this.delTeacher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.delTeacher.Location = new System.Drawing.Point(793, 82);
+            this.delTeacher.Name = "delTeacher";
+            this.delTeacher.Size = new System.Drawing.Size(75, 23);
+            this.delTeacher.TabIndex = 5;
+            this.delTeacher.Text = "Delete";
+            this.delTeacher.UseVisualStyleBackColor = true;
+            this.delTeacher.Click += new System.EventHandler(this.delTeacher_Click);
             // 
             // frmListTeacher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 484);
+            this.Controls.Add(this.delTeacher);
             this.Controls.Add(this.dgvListTeacher);
             this.Controls.Add(this.btnAddnew);
             this.Controls.Add(this.btnSearch);
@@ -124,5 +139,6 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnAddnew;
         private System.Windows.Forms.DataGridView dgvListTeacher;
+        private System.Windows.Forms.Button delTeacher;
     }
 }

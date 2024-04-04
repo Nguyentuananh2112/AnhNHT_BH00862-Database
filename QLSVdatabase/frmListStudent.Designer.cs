@@ -33,6 +33,7 @@
             this.txtKeyword = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnAddnew = new System.Windows.Forms.Button();
+            this.delStudent = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvstudent)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,6 +57,8 @@
             this.dgvstudent.TabIndex = 0;
             this.dgvstudent.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvstudent_CellContentClick);
             this.dgvstudent.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvstudent_CellContentDoubleClick);
+            this.dgvstudent.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListStudent_CellClick);
+
             // 
             // label1
             // 
@@ -98,11 +101,23 @@
             this.btnAddnew.UseVisualStyleBackColor = true;
             this.btnAddnew.Click += new System.EventHandler(this.btnAddnew_Click);
             // 
+            // delStudent
+            // 
+            this.delStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.delStudent.Location = new System.Drawing.Point(634, 124);
+            this.delStudent.Name = "delStudent";
+            this.delStudent.Size = new System.Drawing.Size(75, 23);
+            this.delStudent.TabIndex = 5;
+            this.delStudent.Text = "Delete";
+            this.delStudent.UseVisualStyleBackColor = true;
+            this.delStudent.Click += new System.EventHandler(this.delStudent_Click);
+            // 
             // frmListStudent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.delStudent);
             this.Controls.Add(this.btnAddnew);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtKeyword);
@@ -125,5 +140,6 @@
         private System.Windows.Forms.TextBox txtKeyword;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnAddnew;
+        private System.Windows.Forms.Button delStudent;
     }
 }
